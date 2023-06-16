@@ -28,8 +28,67 @@ const userSchema = new Schema({
     salt: {
         type: String
     },
-    token: {
+    tokens: {
         type: [String],
         default: []
+    },
+    image: {
+        type: String,
+        required: false
+    },
+    hidden: {
+        type: Boolean,
+        default: false
+    },
+    municipality: {
+        type: Schema.Types.ObjectId,
+        ref: "Municipality"
+    },
+    roles: {
+        type: [String],
+        default: []
+    },
+    passResetToken: {
+        type: String
+    },
+    passwordTokenExpires: {
+        type: Date
     }
+}, {timestamps: true});
+
+userSchema.methods = {
+    encryptPassword: function(password) {
+        if(!password) return "";
+
+        try {
+            const encryptedPassword = crypto.pbkdf2Sync(
+                password,
+                this.salt,
+                1000, 64,
+                `sha512`
+            ).toString("hex");
+
+            return encryptedPassword;
+
+        } catch (error) {
+            debug({error});
+            return "";
+        }
+    },
+    makeSalt: function() {
+        return crypto.randomBytes(16).toString("hex");
+    },
+    comparePassword: function(password){
+        return this.hashedpassword == this.encryptPassword(password);
+    }
+}
+
+userSchema.virtual("password")
+    .set(function(password = crypto.randomBytes(16).toString()){
+        if(!password) return;
+
+        this.salt = this.makeSalt();
+        this.hashedpassword = this.encryptPassword(password);
 })
+
+module.exports = Mongoose.model("User", userSchema);

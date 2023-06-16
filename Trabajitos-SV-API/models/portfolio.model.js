@@ -27,8 +27,7 @@ const portfolioSchema = new Schema({
         ref: "Category",
         required: true
     },
-    otherReviews:{
-        reviews: [{
+    reviews: [{
             description: {
                 type: String,
                 trim: true,
@@ -45,7 +44,6 @@ const portfolioSchema = new Schema({
             },
             default: []
         }]
-    }
 });
 
 

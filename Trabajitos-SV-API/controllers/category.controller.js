@@ -21,3 +21,20 @@ controller.createCategory = async (req, res) => {
         return res.status(500).json({ message: "Internal server error"});
     }
 };
+
+controller.findAllCategories = async(req, res) => {
+    try {
+        const category = await Category.find();
+
+        if(category)
+            return res.status(404).json({ message: "Categories not found"});
+        return res.status(200).json({ category });
+
+    } catch (error) {
+        debug({ error });
+
+        return res.status(500).json({ error: "Internal server error"});
+    }
+};
+
+module.exports = controller;

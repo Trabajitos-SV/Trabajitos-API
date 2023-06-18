@@ -29,3 +29,24 @@ controller.createReview = async(req, res) => {
         return res.status(500).json({ error: "Internal server error" })
     } 
 };
+
+
+
+controller.findReviewOfPortfolio = async (req, res) => {
+    try {
+        const { portfolio } = req.body
+
+        const reviews = await Review 
+            .find({ id_portfolio: portfolio })
+            .populate("id_user", "name phone email")
+
+        return res.status(200).json({ reviews })
+
+    } catch (error) {
+        debug({ error })
+        return res.status(500).json({ error: "Internal server error" })
+    }
+};
+
+
+module.exports = controller;

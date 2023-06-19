@@ -60,7 +60,36 @@ constroller.endTrabajito = async(req, res) => {
     }
 }
 
+controller.endConfirmationTrabajito = async (req, res) => {
+    try {
+        const { id: trabajitoId, endNumber, status } = req.body;
+        const { _id: userID } = req.user;
 
+        const trabajito = await Trabajito.findOne({ _id: trabajitoId, id_solicitor: userID });
+
+        if(!trabajito){
+            return res.status(404).json({ error: "Trabajito not found" });
+        }
+
+        if(endNumber !== trabajito.endNumber){
+            return res.status(500).json({ error: "The confirmation number is not valid" })
+        }
+
+        trabajito.status = status;
+
+        const updatedTrabajito = await trabajito.save();
+
+        if(!updatedTrabajito){
+            return res.status(409).json({ error: "Unexpected error updating trabajito" });
+        }
+
+        return res.status(201).json(updatedTrabajito);
+        
+    } catch (error) {
+        debug({ error })
+        return res.status(500).json({ error: "Internal server error" })
+    }
+}
 
 
 

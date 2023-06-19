@@ -1,9 +1,9 @@
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
+const mongoosePaginate = require("mongoose-paginate-v2")
 
-
-const trabajitosSchema = new Schema({
-    desciptiion:{
+const trabajitoSchema = new Schema({
+    description:{
         type: String,
         trim: true,
         required: true
@@ -31,7 +31,7 @@ const trabajitosSchema = new Schema({
     id_hired:{
         type: Schema.Types.ObjectId,
         ref: "User",
-        default: true
+        required: true
     },
     status:{
         type: Schema.Types.ObjectId,
@@ -40,6 +40,5 @@ const trabajitosSchema = new Schema({
     }
 });
 
-
-
-module.exports = Mongoose.model("Trabajitos", trabajitosSchema);
+trabajitoSchema.plugin(mongoosePaginate);
+module.exports = Mongoose.model("Trabajito", trabajitoSchema);

@@ -80,6 +80,13 @@ userSchema.methods = {
     },
     comparePassword: function(password){
         return this.hashedpassword == this.encryptPassword(password);
+    },
+    createResetPasswordToken: function(){
+        const resetToken = crypto.randomBytes(2).toString("hex");
+        this.passResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+        this.passwordTokenExpires = Date.now()+ (10*60*1000);
+
+        return resetToken;
     }
 }
 

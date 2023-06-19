@@ -1,6 +1,5 @@
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
-debug = require("debug")("app:municipality.model");
 
 const municipalitySchema = new Schema({
     name:{
@@ -10,4 +9,4 @@ const municipalitySchema = new Schema({
     }
 });
 
-modelName.exports = Mongoose.model("Municipality", municipalitySchema);
+module.exports = Mongoose.model("Municipality", municipalitySchema);

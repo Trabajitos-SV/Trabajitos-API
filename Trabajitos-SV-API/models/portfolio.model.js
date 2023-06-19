@@ -1,6 +1,6 @@
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
-
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const portfolioSchema = new Schema({
     title: {
@@ -46,5 +46,5 @@ const portfolioSchema = new Schema({
         }]
 });
 
-
+portfolioSchema.plugin(mongoosePaginate);
 mododule.exports = Mongoose.model("Portfolio", portfolioSchema);

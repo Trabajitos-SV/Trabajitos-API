@@ -14,14 +14,14 @@ validators.createPortfolioValidator = [
         .notEmpty()
         .withMessage("The category id can not be empty")
         .isMongoId()
-        .withMessage("The category id have to be of mongo")
+        .withMessage("The category id must be from mongo")
 
 ];
 
 validators.findByIdValidator = [
     param("identifier")
         .notEmpty().withMessage("El id no debe ir vacio")
-        .isMongoId().withMessage("Needs to be mongo id")
+        .isMongoId().withMessage("The id must be from mongo")
 ];
 
 module.exports = validators;

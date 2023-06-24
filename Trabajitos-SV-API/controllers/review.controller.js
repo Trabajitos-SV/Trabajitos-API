@@ -1,5 +1,5 @@
-const Review = require('../models/review.model.js');
-const debug = require('debug')('app:review-controller');
+//const Review = require('../models/review.model.js');
+//const debug = require('debug')('app:review-controller');
 
 const controller = {};
 
@@ -49,4 +49,4 @@ controller.findReviewOfPortfolio = async (req, res) => {
 };
 
 
-module.exports = controller;
+//module.exports = controller;

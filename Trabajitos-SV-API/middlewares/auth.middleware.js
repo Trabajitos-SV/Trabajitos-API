@@ -55,3 +55,27 @@ middleware.authentication = async (req, res, next) => {
     return res.status(500).json({ error: "Unexpected server error" });
   }
 };
+
+middleware.authentication = (roleRequired = ROLES.SYSADMIN) => {
+  return (req, res, next) => {
+    try {
+      const { roles = [] } = req.user;
+
+      const roleIndex = roles.findIndex(
+        (role) => role == roleRequired || role == ROLES.SYSADMIN
+      );
+
+      if (!roleIndex < 0) {
+        return res.status(403).json({ error: "You don't have permissions" });
+      }
+
+      next();
+    } catch (error) {
+      debug({ error });
+      return res.status(500).json({ error: "Unexpected server error" });
+    }
+  };
+};
+
+
+module.exports = middleware;

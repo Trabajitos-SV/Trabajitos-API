@@ -2,7 +2,10 @@ const Category = require("../models/category.model");
 const debug = require("debug")("app:category-controller");
 
 const controller = {};
-
+const options = {
+    page: 1,
+    limit: 10
+}
 
 controller.createCategory = async (req, res) => {
     try {
@@ -24,16 +27,15 @@ controller.createCategory = async (req, res) => {
 
 controller.findAllCategories = async(req, res) => {
     try {
-        const category = await Category.find();
+        const category = await Category.paginate({}, options);
 
-        if(category)
-            return res.status(404).json({ message: "Categories not found"});
+        if(!category)
+            return res.status(404).json({ message: "Categories not found."});
         return res.status(200).json({ category });
 
     } catch (error) {
         debug({ error });
-
-        return res.status(500).json({ error: "Internal server error"});
+        return res.status(500).json({ error: "Internal server error."});
     }
 };
 

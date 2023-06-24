@@ -14,7 +14,7 @@ controller.createStatus = async (req, res) => {
 
         await newStatus.save();
 
-        return res.status(201).json({ message: "Status save successfully"});
+        return res.status(201).json({ message: "Status saved successfully!"});
 
     } catch (error) {
         debug({ error });

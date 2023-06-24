@@ -4,11 +4,11 @@ const User = require("../models/user.model");
 
 const ROLES = require("./../data/roles.constants.json");
 
-const middleware = {};
+const middlewares = {};
 
 const tokenPrefix = "Bearer";
 
-middleware.authentication = async (req, res, next) => {
+middlewares.authentication = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
 
@@ -33,7 +33,6 @@ middleware.authentication = async (req, res, next) => {
     }
 
     const { userId } = tokenObject;
-    debug(userId);
 
     const user = await User.findById(userId);
 
@@ -56,7 +55,7 @@ middleware.authentication = async (req, res, next) => {
   }
 };
 
-middleware.authentication = (roleRequired = ROLES.SYSADMIN) => {
+middlewares.authentication = (roleRequired = ROLES.SYSADMIN) => {
   return (req, res, next) => {
     try {
       const { roles = [] } = req.user;
@@ -78,4 +77,4 @@ middleware.authentication = (roleRequired = ROLES.SYSADMIN) => {
 };
 
 
-module.exports = middleware;
+module.exports = middlewares;

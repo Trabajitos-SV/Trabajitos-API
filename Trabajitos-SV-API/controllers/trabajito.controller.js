@@ -74,7 +74,7 @@ controller.startTrabajito = async (req, res) => {
     }
 }
 
-constroller.endTrabajito = async (req, res) => {
+controller.endTrabajito = async (req, res) => {
     try {
         const { id: trabajitoId, endNumber } = req.body;
         const { _id: userId } = req.user;

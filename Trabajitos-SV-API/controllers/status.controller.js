@@ -22,4 +22,4 @@ controller.createStatus = async (req, res) => {
     }
 };
 
-modyule.exports = controller; 
+module.exports = controller; 

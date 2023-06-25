@@ -47,4 +47,4 @@ const portfolioSchema = new Schema({
 });
 
 portfolioSchema.plugin(mongoosePaginate);
-mododule.exports = Mongoose.model("Portfolio", portfolioSchema);
+module.exports = Mongoose.model("Portfolio", portfolioSchema);

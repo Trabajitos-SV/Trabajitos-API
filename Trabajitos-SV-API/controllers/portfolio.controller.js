@@ -15,7 +15,7 @@ controller.create = async (req, res) => {
         const portfolio = new Portfolio({
             title: title,
             description: description,
-            image: image,
+            images: image,
             user: userId,
             category: category
         });
@@ -38,7 +38,7 @@ controller.findMyPortfolio = async (req, res) => {
     try {
         const { _id: userId } = req.user;
         const portfolio = await Portfolio.findOne({ user: userId }).populate(
-            "user",
+            "user category",
             "name email phone municipality -_id"
         );
 
@@ -57,7 +57,7 @@ controller.findPortfolioById = async (req, res) => {
     try {
         const { identifier } = req.params;
         const portfolio = await Portfolio.findOne({ _id: identifier }).populate(
-            "user",
+            "user category",
             "name email phone municipality -_id"
         );
 

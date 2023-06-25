@@ -40,7 +40,7 @@ middlewares.authentication = async (req, res, next) => {
       return res.status(401).json({ error: "No authorization" });
     }
 
-    const isTokenValid = user.token.includes(token);
+    const isTokenValid = user.tokens.includes(token);
     if (!isTokenValid) {
       return res.status(401).json({ error: "No authorization" });
     }

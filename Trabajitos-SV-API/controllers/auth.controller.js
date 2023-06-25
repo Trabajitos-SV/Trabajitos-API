@@ -52,7 +52,7 @@ controller.login = async (req, res) => {
 
         const token = createToken(user._id);
 
-        user.token = [token, ...user.token.filter(_token => verifyToken(_token)).splice(0,4)];
+        user.tokens = [token, ...user.tokens.filter(_token => verifyToken(_token)).splice(0,4)];
         await user.save();
 
         return res.status(200).json({ token: token });

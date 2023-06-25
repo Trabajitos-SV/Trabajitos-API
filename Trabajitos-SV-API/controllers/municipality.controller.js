@@ -5,7 +5,7 @@ const controller = {};
 
 controller.createMunicipality = async (req, res) => {
     try {
-        const { name } = req.body;
+        const {name} = req.body;
 
         const newMunicipality = new Municipality({
             name: name

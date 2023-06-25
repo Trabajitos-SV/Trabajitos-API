@@ -23,7 +23,7 @@ router.get("/myPortfolio",
     authentication,
     portfolioController.findMyPortfolio);
 
-router.get("/findPortfolioById/:identifier",
+router.get("/findById/:identifier",
     authentication,
     portfolioController.findPortfolioById);
 

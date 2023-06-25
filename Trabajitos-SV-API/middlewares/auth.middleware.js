@@ -55,7 +55,7 @@ middlewares.authentication = async (req, res, next) => {
   }
 };
 
-middlewares.authentication = (roleRequired = ROLES.SYSADMIN) => {
+middlewares.authorization = (roleRequired = ROLES.SYSADMIN) => {
   return (req, res, next) => {
     try {
       const { roles = [] } = req.user;
@@ -64,7 +64,7 @@ middlewares.authentication = (roleRequired = ROLES.SYSADMIN) => {
         (role) => role == roleRequired || role == ROLES.SYSADMIN
       );
 
-      if (!roleIndex < 0) {
+      if (roleIndex < 0) {
         return res.status(403).json({ error: "You don't have permissions" });
       }
 

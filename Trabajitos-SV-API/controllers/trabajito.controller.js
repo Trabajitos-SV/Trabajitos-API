@@ -21,7 +21,7 @@ const jobOptions = {
     }
 }
 
-controller.createTrabajito = async () => {
+controller.createTrabajito = async (req, res) => {
     try {
         const { description, dateInit, status, id_hired } = req.body;
         const { _id: userId } = req.user;

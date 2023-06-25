@@ -6,14 +6,14 @@ validators.createTrabajitoValidator = [
         .notEmpty()
         .withMessage("The description field can not be empty.")
         .isLength({ max: 280 }).withMessage(" The description can not overpass the limit."),
-        body("dateInit")
-            .notEmpty()
-            .withMessage("The init date field can not be empty."),
-        body("id_hired")
-            .notEmpty()
-            .withMessage("The hired person id field can not be empty.")
-            .isMongoId()
-            .withMessage("The hired person id must have MongoDB format.")
+    body("dateInit")
+        .notEmpty()
+        .withMessage("The init date field can not be empty."),
+    body("id_hired")
+        .notEmpty()
+        .withMessage("The hired person id field can not be empty.")
+        .isMongoId()
+        .withMessage("The hired person id must have MongoDB format.")
 ];
 
 validators.findByIdValidator = [

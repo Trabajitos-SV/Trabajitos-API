@@ -15,7 +15,7 @@ controller.create = async (req, res) => {
         const portfolio = new Portfolio({
             title: title,
             description: description,
-            image: image,
+            images: image,
             user: userId,
             category: category
         });

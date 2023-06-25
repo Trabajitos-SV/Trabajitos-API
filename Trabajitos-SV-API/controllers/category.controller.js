@@ -9,7 +9,7 @@ const options = {
 
 controller.createCategory = async (req, res) => {
     try {
-        const {name, image} = rep.body;
+        const {name, image} = req.body;
 
         const newCategory = new Category({
             name: name,

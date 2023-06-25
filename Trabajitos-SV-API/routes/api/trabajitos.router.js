@@ -37,7 +37,7 @@ router.post("/",
     authorization(ROLES.USER),
     trabajitoValidator.createTrabajitoValidator,
     runValidations,
-    trabajitoController.create);
+    trabajitoController.createTrabajito);
 
 router.patch("/start",
     authentication,

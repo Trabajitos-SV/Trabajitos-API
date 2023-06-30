@@ -328,6 +328,34 @@ router.get("whoami",
     authentication,
     authController.whoamI);
 
+/**
+ * @swagger
+ * /api/auth:
+ *    get:
+ *      summary: Request lists all users registered
+ *      tags: [User]
+ *      security:
+ *         - bearerAuth: []
+ *      responses:
+ *          200:
+ *            description: List of all users
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/User'
+ *          500:
+ *            description: Error message
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          error:
+ *                             type: string
+ *                             example: "Internal server error"
+ */
 router.get("/",
     authentication,
     authorization(ROLES.ADMIN),

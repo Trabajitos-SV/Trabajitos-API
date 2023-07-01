@@ -140,7 +140,7 @@ controller.findAll = async (req, res) => {
                 .populate("id_hired", "name phone email");
 
         if (!trabajitos) {
-            return res.status(404).json({ error: "Trabajito not found " })
+            return res.status(404).json({ error: "Trabajitos not found" })
         }
 
         return res.status(200).json({ trabajitos });

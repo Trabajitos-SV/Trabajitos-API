@@ -28,7 +28,7 @@ controller.register = async (req, res) => {
         })
 
         await newUser.save();
-        return res.status(201).json({ message: "Successfully saved user!" });
+        return res.status(201).json({ message: "User was successfully created!" });
     } catch (error) {
         debug({ error });
         return res.status(500).json({ message: "Unexpected server error." });
@@ -133,7 +133,7 @@ controller.verifyCode = async (req, res) => {
         if (!user) {
             return res.status(400).json({ error: "Invalid or expired token!"});
         }
-        return res.status(200).json(user._id);
+        return res.status(200).json({userId: user._id});
 
     } catch (error) {
         debug({ error });

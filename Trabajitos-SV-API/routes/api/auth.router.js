@@ -47,7 +47,7 @@ const { authentication, authorization } = require("../../middlewares/auth.middle
  * @swagger
  * tags:
  *  name: User
- *  description: This section contains all the requests related to Portfolio
+ *  description: This section contains all the requests related to User
  */
 
 /**

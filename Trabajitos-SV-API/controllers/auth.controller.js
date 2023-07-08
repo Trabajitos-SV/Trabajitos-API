@@ -66,9 +66,9 @@ controller.login = async (req, res) => {
 controller.whoamI = async (req, res) => {
     try {
         const { _id: userId } = req.user;
-        const user = await User.findOne({ _id: userId }).populate(
-            "municipality", "name -_id"
-        );
+        const user = await User.findOne({ _id: userId })
+        .select("name email phone")
+        .populate("municipality", "name -_id");
 
         if (!user) {
             return res.status(404).json({ error: "User not found." })

@@ -324,7 +324,7 @@ router.patch("/resetPassword",
     runValidations,
     authController.passwordReset);
 
-router.get("whoami",
+router.get("/whoami",
     authentication,
     authController.whoamI);
 

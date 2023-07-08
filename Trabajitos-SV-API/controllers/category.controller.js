@@ -4,7 +4,8 @@ const debug = require("debug")("app:category-controller");
 const controller = {};
 const options = {
     page: 1,
-    limit: 10
+    limit: 10,
+    select: "name image"
 }
 
 controller.createCategory = async (req, res) => {

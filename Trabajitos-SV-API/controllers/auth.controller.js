@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 const debug = require("debug")("app:auth-controller");
 const ROLES = require("../data/roles.constants.json");
 const crypto = require("crypto");
-const sendEmail = require("../utils/email.tools");
+const sendEmailv2 = require('../utils/email.tools');
 
 const { createToken, verifyToken } = require("../utils/jwt.tools");
 
@@ -108,14 +108,8 @@ controller.forgotPassword = async (req, res) => {
 
         await user.save();
 
-        const message = `We have received a password reset request. Please use the code below to reset your password inside the app\n\n${resetToken}\n\nPlease keep in mind this link will be valid just for 10 minutes.`;
-
         try {
-            await sendEmail({
-                email: user.email,
-                subject: "Password change request",
-                message: message
-            });
+            await sendEmailv2(email, resetToken);
 
             return res.status(200).json({ msg: "Email successfully sent, please check your email inbox."});
 

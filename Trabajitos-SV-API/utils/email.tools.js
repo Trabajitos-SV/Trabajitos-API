@@ -1,23 +1,25 @@
-const nodemailer = require("nodemailer");
+const { MailtrapClient } = require('mailtrap');
 
-const sendEmail = async (option) => {
-    const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST.toString(),
-        port: process.env.EMAIL_PORT,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD
-        }
-    });
+const TOKEN = process.env.EMAIL_PASSWORD;
+const ENDPOINT = process.env.EMAIL_ENDPOINT;
+const SENDER_EMAIL = process.env.EMAIL_SENDER;
 
-    const emailOptions = {
-        from: 'Trabajitos Support<support@trabajitosprueba.com>',
-        to: option.email,
-        subject: option.subject,
-        text: option.message
-    }
+const client = new MailtrapClient({ endpoint: ENDPOINT, token: TOKEN });
 
-    await transporter.sendMail(emailOptions);
+const sender = { name: "Trabajitos Support", email: SENDER_EMAIL };
+
+const sendEmailv2 = async (recipientMail, code) => {
+    client
+        .send({
+            from: sender,
+            to: [{ email: recipientMail }],
+            template_uuid: "501a7b62-4b0c-44c2-b040-28c781bdffb8",
+            template_variables: {
+                user_email: recipientMail,
+                code: code
+            },
+        })
+        .then(console.log, console.error);
 }
 
-module.exports = sendEmail;
+module.exports = sendEmailv2;

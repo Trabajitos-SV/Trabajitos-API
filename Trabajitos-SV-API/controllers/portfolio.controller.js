@@ -30,7 +30,6 @@ controller.create = async (req, res) => {
         for (const portPhoto of portPhotos) {
             try {
               const result = await cloudinary.v2.uploader.upload(portPhoto.path);
-              console.log('Imagen subida a Cloudinary:', result.secure_url, ' con Public Id:', result.public_id);
               uploadedImages.push({
                 secureUrl: result.secure_url,
                 publicId: result.public_id

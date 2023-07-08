@@ -27,6 +27,10 @@ const portfolioSchema = new Schema({
         ref: "Category",
         required: true
     },
+    avgQualification: {
+        type: Number,
+        default: 0
+    },
     reviews: [{
             description: {
                 type: String,

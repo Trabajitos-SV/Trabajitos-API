@@ -13,10 +13,10 @@ const portfolioSchema = new Schema({
         trim: true,
         required: true
     },
-    images:{
-        type: [String],
-        default: []
-    },
+    uploadedImages: [{
+        secureUrl: String,
+        publicId: String
+    }],
     user:{
         type: Schema.Types.ObjectId,
         ref: "User",

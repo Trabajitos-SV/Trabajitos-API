@@ -1,5 +1,13 @@
 const Portfolio = require("../models/portfolio.model");
+const cloudinary = require('cloudinary');
+const fs = require('fs-extra');
 const debug = require("debug")("app:portfolio-controller");
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
 
 const controller = {};
 const paginateOptions = {
@@ -9,18 +17,34 @@ const paginateOptions = {
 
 controller.create = async (req, res) => {
     try {
-        const { title, description, image, category } = req.body;
+        const { title, description, category } = req.body;
+        const portPhotos = req.files;
         const { _id: userId } = req.user;
+        const uploadedImages = [];
 
         const healthCheck = await Portfolio.findOne({ user: userId });
         if (healthCheck) {
             return res.status(409).json({ error: "Unexpected error occurred, you already have a portfolio." });
         }
 
+        for (const portPhoto of portPhotos) {
+            try {
+              const result = await cloudinary.v2.uploader.upload(portPhoto.path);
+              console.log('Imagen subida a Cloudinary:', result.secure_url, ' con Public Id:', result.public_id);
+              uploadedImages.push({
+                secureUrl: result.secure_url,
+                publicId: result.public_id
+              });
+              await fs.unlink(portPhoto.path);
+            } catch (error) {
+              console.error('Error al subir la imagen a Cloudinary:', error);
+            }
+        }
+
         const portfolio = new Portfolio({
             title: title,
             description: description,
-            images: image,
+            uploadedImages: uploadedImages,
             user: userId,
             category: category
         });

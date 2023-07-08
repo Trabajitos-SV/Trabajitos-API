@@ -65,8 +65,15 @@ controller.login = async (req, res) => {
 
 controller.whoamI = async (req, res) => {
     try {
-        const { _id, username, email, roles } = req.user;
-        return res.status(200).json({ _id, username, email, roles });
+        const { _id: userId } = req.user;
+        const user = await User.findOne({ _id: userId }).populate(
+            "municipality", "name -_id"
+        );
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." })
+        }
+        return res.status(200).json( user );
     } catch (error) {
         debug({ error });
         return res.status(500).json({ message: "Unexpected server error." });

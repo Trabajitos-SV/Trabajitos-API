@@ -241,6 +241,14 @@ router.get("/findById/:identifier",
     authentication,
     portfolioController.findPortfolioById);
 
+router.get("/topPerformers",
+    authentication,
+    portfolioController.getTopPortfolios);
+
+router.get("/suggestPort",
+    authentication,
+    portfolioController.getRandomPortfolios);
+
 /**
  * @swagger
  * /api/portfolio:

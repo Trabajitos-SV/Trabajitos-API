@@ -76,7 +76,7 @@ controller.startTrabajito = async (req, res) => {
 
 controller.endTrabajito = async (req, res) => {
     try {
-        const { id: trabajitoId, endNumber } = req.body;
+        const { id: trabajitoId, endNumber, bill } = req.body;
         const { _id: userId } = req.user;
 
         const trabajito = await Trabajito.findOne({ _id: trabajitoId, id_hired: userId });
@@ -86,6 +86,10 @@ controller.endTrabajito = async (req, res) => {
         }
 
         trabajito.endNumber = endNumber;
+
+        if(bill){
+            trabajito.bill = bill;
+        }
 
         const updatedTrabajito = await trabajito.save();
         if (!updatedTrabajito) {

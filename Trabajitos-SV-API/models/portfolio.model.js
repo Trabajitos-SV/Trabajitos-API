@@ -13,10 +13,10 @@ const portfolioSchema = new Schema({
         trim: true,
         required: true
     },
-    images:{
-        type: [String],
-        default: []
-    },
+    uploadedImages: [{
+        secureUrl: String,
+        publicId: String
+    }],
     user:{
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -26,6 +26,10 @@ const portfolioSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Category",
         required: true
+    },
+    avgQualification: {
+        type: Number,
+        default: 0
     },
     reviews: [{
             description: {

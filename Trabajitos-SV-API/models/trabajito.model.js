@@ -37,7 +37,13 @@ const trabajitoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Status",
         required: true
-    }
+    },
+    bill: [
+        {
+            itemCharged: String,
+            cost: Number
+        }
+    ]
 });
 
 trabajitoSchema.plugin(mongoosePaginate);

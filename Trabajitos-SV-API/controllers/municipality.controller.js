@@ -5,23 +5,35 @@ const controller = {};
 
 controller.createMunicipality = async (req, res) => {
     try {
-        const {name} = req.body;
+        const { municipalities } = req.body;
 
-        const newMunicipality = new Municipality({
-            name: name
-        });
-
-        const savedMunicipality = await newMunicipality.save();
-        if (!savedMunicipality) {
-            return res.status(409).json({ error: "Municipality cannot be saved"})
+        if (!municipalities) {
+            return res.status(400).json({ error: "No municipalities provided." });
         }
 
-        return res.status(201).json({ message: "Successfully saved municipality!"});
+        const savedMunicipalities = [];
+
+        for (const municipalityName of municipalities) {
+            const newMunicipality = new Municipality({
+                name: municipalityName
+            });
+
+            const savedMunicipality = await newMunicipality.save();
+
+            if (!savedMunicipality) {
+                return res.status(409).json({ error: "Unexpected error. Municipality cannot be saved." });
+            }
+
+            savedMunicipalities.push(savedMunicipality);
+        }
+
+        return res.status(201).json({ message: "Successfully saved municipalities!", savedMunicipalities });
     } catch (error) {
-        debug({ error });
+        console.error(error);
         return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
+
 
 controller.findAll = async (req, res) => {
     try {
@@ -30,9 +42,9 @@ controller.findAll = async (req, res) => {
             .select("name");
 
         if (!municipalities) {
-            return res.status(404).json({ error: "Municipalities not found."});
+            return res.status(404).json({ error: "Municipalities not found." });
         }
-        return res.status(200).json( municipalities );
+        return res.status(200).json(municipalities);
     } catch (error) {
         debug({ error });
         return res.status(500).json({ message: "Unexpected server error." });

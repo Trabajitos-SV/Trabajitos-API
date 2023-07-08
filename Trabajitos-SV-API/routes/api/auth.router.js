@@ -77,9 +77,11 @@ const { authentication, authorization } = require("../../middlewares/auth.middle
  *            content:
  *              application/json:
  *                  schema:
- *                      type: array
- *                      items:
- *                          $ref: '#/components/schemas/User'
+ *                      type: object
+ *                      properties:
+ *                          message:
+ *                             type: string
+ *                             example: "User was successfully created!"
  *          409:
  *            description: Error message
  *            content:

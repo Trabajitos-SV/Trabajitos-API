@@ -363,5 +363,64 @@ router.get("/",
     authorization(ROLES.ADMIN),
     authController.findAll);
 
+/**
+ * @swagger
+ * /api/auth/update:
+ *    patch:
+ *      summary: Change a user personal information
+ *      tags: [User]
+ *      security:
+ *         - bearerAuth: []
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/x-www-form-urlencoded:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          name:
+ *                              type: string
+ *                          phone:
+ *                              type: string
+ *                          email:
+ *                              type: string
+ *                          municipality:
+ *                              type: ObjectId
+ *      responses:
+ *          200:
+ *            description: User was successfully updated!
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          message:
+ *                             type: string
+ *                             example: "User successfully updated."
+ *          409:
+ *            description: Error message
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          error:
+ *                             type: string
+ *                             example: "User cannot be updated."
+ *          500:
+ *            description: Error message
+ *            content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          error:
+ *                             type: string
+ *                             example: "Internal server error"
+ */
+router.patch("/update",
+    authentication,
+    authorization(ROLES.USER),
+    authController.updateUser);
 
 module.exports = router;

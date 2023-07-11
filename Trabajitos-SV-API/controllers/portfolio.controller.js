@@ -12,7 +12,11 @@ cloudinary.config({
 const controller = {};
 const paginateOptions = {
     page: 1,
-    limit: 10
+    limit: 10,
+    populate: {
+        path: 'user category',
+        select: 'name phone email municipality'
+    }
 }
 
 controller.create = async (req, res) => {

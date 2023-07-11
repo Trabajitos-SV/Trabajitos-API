@@ -10,7 +10,7 @@ const controller = {};
 
 controller.register = async (req, res) => {
     try {
-        const { name, phone, email, password, municipality } = req.body;
+        const { name, phone, email, password } = req.body;
 
         const user = await User.findOne({ email: email });
 
@@ -23,7 +23,6 @@ controller.register = async (req, res) => {
             phone: phone,
             email: email,
             password: password,
-            municipality: municipality,
             roles: [ROLES.USER]
         })
 
@@ -163,6 +162,37 @@ controller.passwordReset = async (req, res) => {
     } catch (error) {
         debug({ error });
         return res.status(500).json({ message: "Unexpected server error." });
+    }
+}
+
+controller.updateUser = async (req, res) => {
+    try {
+        const { name, phone, email, municipality } = req.body;
+        const { _id: userId } = req.user;
+
+        const updatedFields = {};
+
+        if (name) updatedFields.name = name;
+        if (phone) updatedFields.phone = phone;
+        if (email) updatedFields.email = email;
+        if (municipality) updatedFields.municipality = municipality;
+
+        const newUpdatedUser= await User.findByIdAndUpdate(
+            userId,
+            updatedFields,
+            {
+                new: true
+            }
+        );
+
+        if (!newUpdatedUser) {
+            return res.status(409).json({ error: "User cannot be updated." })
+        }
+
+        return res.status(200).json({ message: "User successfully updated."});
+    } catch (error) {
+        debug({ error });
+        return res.status(500).json({ error: "Internal server error." });
     }
 }
 

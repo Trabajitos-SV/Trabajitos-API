@@ -159,6 +159,10 @@ controller.findMyRequests = async (req, res) => {
     try {
         const { _id: userId } = req.user;
 
+        if(req.query){
+            requestOptions.page = req.query.page
+        }
+
         const trabajitos =
             await Trabajito
                 .paginate({ id_solicitor: userId, hidden: false }, requestOptions);
@@ -199,6 +203,10 @@ controller.findRequestById = async (req, res) => {
 controller.findMyJobs = async (req, res) => {
     try {
         const { _id: userId } = req.user;
+
+        if(req.query){
+            jobOptions.page = req.query.page
+        }
 
         const trabajitos =
             await Trabajito

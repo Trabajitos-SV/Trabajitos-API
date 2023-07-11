@@ -141,6 +141,10 @@ controller.findPortfolioByCategory = async (req, res) => {
         const { identifier } = req.params;
         const { _id } = req.user;
 
+        if(req.query){
+            paginateOptions.page = req.query.page
+        }
+
         const portfolio = await Portfolio.paginate({
             category: identifier,
             user: { $ne: _id },
